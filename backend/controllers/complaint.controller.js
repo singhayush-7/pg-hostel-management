@@ -1,5 +1,5 @@
 const Complaint = require("../models/Complaint.model");
-const JoinRequest = require("../models/JoinRequest.model");
+const JoinRequest = require("../models/joinRequest.model");
 const Notification = require("../models/Notification.model");
  
 exports.createComplaint = async (req, res, next) => {

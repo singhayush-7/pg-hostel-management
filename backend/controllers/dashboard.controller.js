@@ -2,7 +2,7 @@ const Property = require("../models/Property.model");
 const Room = require("../models/Room.model");
 const Payment = require("../models/Payment.model");
 const Complaint = require("../models/Complaint.model");
-const JoinRequest = require("../models/JoinRequest.model");
+const JoinRequest = require("../models/joinRequest.model");
 const Notification = require("../models/Notification.model");
 const Task = require("../models/Task.model");
 

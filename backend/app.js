@@ -14,6 +14,9 @@ const checkoutRoutes = require("./routes/checkout.routes");
 const { errorHandler, notFound } = require("./middleware/error.middleware");
 
 const app = express();
+
+// Trust proxy for Render load balancers (required to set secure cookies via HTTPS)
+app.set("trust proxy", 1);
  
 app.use(
   cors({
