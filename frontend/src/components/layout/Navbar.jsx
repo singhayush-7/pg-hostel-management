@@ -51,6 +51,15 @@ const Navbar = () => {
     return map[user?.role] || "/";
   };
 
+  const getProfileLink = () => {
+    const map = {
+      student: "/student/settings",
+      owner: "/owner/settings",
+      admin: "/admin/settings",
+    };
+    return map[user?.role] || "/";
+  };
+
   const getRoleBadgeColor = () => {
     const map = {
       student: "badge-primary",
@@ -131,7 +140,7 @@ const Navbar = () => {
                       </div>
                       <div className="py-1">
                         <Link
-                          to="/profile"
+                          to={getProfileLink()}
                           className="flex items-center gap-2 px-4 py-2.5 text-sm text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors"
                         >
                           <User className="w-4 h-4" />
@@ -202,7 +211,7 @@ const Navbar = () => {
                   <LayoutDashboard className="w-4 h-4" />
                   Dashboard
                 </Link>
-                <Link to="/profile" className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-dark-700 transition-colors">
+                <Link to={getProfileLink()} className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-dark-700 transition-colors">
                   <User className="w-4 h-4" />
                   Profile
                 </Link>
