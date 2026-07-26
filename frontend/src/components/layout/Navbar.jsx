@@ -101,7 +101,7 @@ const Navbar = () => {
              
                 <Link
                   to={getDashboardLink()}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-dark-700 transition-colors text-slate-300 hover:text-white text-sm"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-surface-100 transition-colors text-surface-600 hover:text-primary-600 font-medium text-sm"
                 >
                   <LayoutDashboard className="w-4 h-4" />
                   Dashboard
@@ -111,38 +111,40 @@ const Navbar = () => {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileOpen(!isProfileOpen)}
-                    className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-xl border border-dark-600 hover:border-primary-500/50 bg-dark-800 hover:bg-dark-700 transition-all text-sm"
+                    className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-xl border border-border hover:border-primary-500/50 bg-white hover:bg-surface-50 shadow-sm transition-all text-sm"
                   >
                     <div className="w-6 h-6 rounded-full bg-gradient-primary flex items-center justify-center text-white text-xs font-bold">
                       {user?.name?.charAt(0)?.toUpperCase()}
                     </div>
-                    <span className="text-slate-300 max-w-[100px] truncate">{user?.name}</span>
-                    <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${isProfileOpen ? "rotate-180" : ""}`} />
+                    <span className="text-surface-700 font-medium max-w-[100px] truncate">{user?.name}</span>
+                    <ChevronDown className={`w-4 h-4 text-surface-400 transition-transform ${isProfileOpen ? "rotate-180" : ""}`} />
                   </button>
 
                   {isProfileOpen && (
-                    <div className="absolute right-0 mt-2 w-52 glass-dark rounded-xl border border-dark-600 shadow-card-hover animate-slide-down py-1 z-50">
-                      <div className="px-3 py-2 border-b border-dark-600">
-                        <p className="text-white text-sm font-medium truncate">{user?.name}</p>
-                        <p className="text-slate-500 text-xs truncate">{user?.email}</p>
-                        <span className={`${getRoleBadgeColor()} mt-1`}>
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl border border-border shadow-xl animate-slide-down py-1 z-50">
+                      <div className="px-4 py-3 border-b border-border">
+                        <p className="text-surface-900 text-sm font-bold truncate">{user?.name}</p>
+                        <p className="text-surface-500 text-xs truncate mb-2">{user?.email}</p>
+                        <span className={`${getRoleBadgeColor()} inline-block`}>
                           {user?.role}
                         </span>
                       </div>
-                      <Link
-                        to="/profile"
-                        className="flex items-center gap-2 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-dark-700 transition-colors"
-                      >
-                        <User className="w-4 h-4" />
-                        My Profile
-                      </Link>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-danger-400 hover:text-danger-300 hover:bg-danger-500/10 transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Logout
-                      </button>
+                      <div className="py-1">
+                        <Link
+                          to="/profile"
+                          className="flex items-center gap-2 px-4 py-2.5 text-sm text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors"
+                        >
+                          <User className="w-4 h-4" />
+                          My Profile
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-danger-500 hover:text-danger-600 hover:bg-danger-50 transition-colors"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          Logout
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
