@@ -42,10 +42,8 @@ export default function PropertyDetails() {
   }, [dispatch, id]);
 
   const handleOpenModal = (room) => {
-    // Basic auth check can be done here or handled by guarded routes/backend.
-    // Assuming they are logged in or will be prompted.
-    const token = localStorage.getItem('token');
-    if (!token) {
+    // Basic auth check using Redux state (HttpOnly cookies mean we can't check localStorage)
+    if (!user) {
       toast.error('Please login to request a room');
       navigate('/login');
       return;
