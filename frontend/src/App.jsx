@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
@@ -41,16 +41,21 @@ import { getMe, selectIsAuthenticated } from "./store/slices/authSlice";
 function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const [isInitializing, setIsInitializing] = window.__smartstay_init !== undefined
-    ? [false, () => {}]
-    : (() => {
-        window.__smartstay_init = true;
-        return [false, () => {}];
-      })();
+  const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
-    dispatch(getMe());
+    dispatch(getMe()).finally(() => {
+      setIsInitializing(false);
+    });
   }, [dispatch]);
+
+  if (isInitializing) {
+    return (
+      <div className="min-h-screen bg-surface-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
+      </div>
+    );
+  }
 
   return (
     <>
