@@ -1,5 +1,5 @@
-const Property = require("../models/Property.model");
-const Room = require("../models/Room.model");
+const Property = require("../models/property.model");
+const Room = require("../models/room.model");
 const Payment = require("../models/Payment.model");
 const Complaint = require("../models/Complaint.model");
 const JoinRequest = require("../models/joinRequest.model");
