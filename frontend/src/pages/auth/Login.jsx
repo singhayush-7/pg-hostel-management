@@ -49,11 +49,11 @@ const Login = () => {
        
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 group mb-6">
-            <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow-primary">
+            <div className="w-10 h-10 rounded-xl bg-primary-500 flex items-center justify-center shadow-md">
               <Home className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-2xl">
-              <span className="gradient-text">Smart</span>
+              <span className="text-primary-600">Smart</span>
               <span className="text-surface-900">Stay</span>
             </span>
           </Link>

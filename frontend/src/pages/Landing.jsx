@@ -118,7 +118,7 @@ const Landing = () => {
             {/* Headline */}
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 animate-slide-up text-balance">
               Manage Your{" "}
-              <span className="gradient-text">PG & Hostel</span>
+              <span className="text-primary-600">PG & Hostel</span>
               <br />
               Like Never Before
             </h1>
@@ -185,7 +185,7 @@ const Landing = () => {
             <span className="badge-primary mb-4 inline-block">Features</span>
             <h2 className="text-4xl md:text-5xl font-bold text-surface-900 mb-4">
               Everything You Need to
-              <span className="gradient-text"> Run a Modern PG</span>
+              <span className="text-primary-600"> Run a Modern PG</span>
             </h2>
             <p className="text-surface-500 text-lg max-w-2xl mx-auto">
               Say goodbye to WhatsApp groups, Excel sheets, and notebook registers.
@@ -213,7 +213,7 @@ const Landing = () => {
             <span className="badge-secondary mb-4 inline-block">How It Works</span>
             <h2 className="text-4xl md:text-5xl font-bold text-surface-900 mb-4">
               Up and Running in{" "}
-              <span className="gradient-text-teal">3 Simple Steps</span>
+              <span className="text-primary-600-teal">3 Simple Steps</span>
             </h2>
           </div>
 
@@ -273,7 +273,7 @@ const Landing = () => {
         <div className="section-container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-gradient-primary flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-primary-500 flex items-center justify-center">
                 <Home className="w-3.5 h-3.5 text-white" />
               </div>
               <span className="font-bold">

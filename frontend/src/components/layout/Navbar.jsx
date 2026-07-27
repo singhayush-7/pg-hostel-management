@@ -81,7 +81,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
            
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center shadow-glow-primary group-hover:shadow-glow-primary transition-shadow">
+            <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center shadow-md group-hover:shadow-md transition-shadow">
               <Home className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold text-lg tracking-tight text-surface-900">
@@ -122,7 +122,7 @@ const Navbar = () => {
                     onClick={() => setIsProfileOpen(!isProfileOpen)}
                     className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-xl border border-border hover:border-primary-500/50 bg-white hover:bg-surface-50 shadow-sm transition-all text-sm"
                   >
-                    <div className="w-6 h-6 rounded-full bg-gradient-primary flex items-center justify-center text-white text-xs font-bold">
+                    <div className="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs font-bold">
                       {user?.name?.charAt(0)?.toUpperCase()}
                     </div>
                     <span className="text-surface-700 font-medium max-w-[100px] truncate">{user?.name}</span>

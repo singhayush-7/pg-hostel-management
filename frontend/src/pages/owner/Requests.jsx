@@ -74,7 +74,7 @@ export default function OwnerRequests() {
             <div key={req._id} className="bg-white rounded-2xl border border-border p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
               <div className="flex justify-between items-start mb-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                  <div className="w-12 h-12 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold text-lg shadow-sm">
                     {req.tenant?.name?.charAt(0).toUpperCase()}
                   </div>
                   <div>
