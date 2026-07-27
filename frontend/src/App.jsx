@@ -79,8 +79,9 @@ function App() {
       <Routes>
         {/* ─── Public Routes ──────────────────────────────────────── */}
         <Route path="/" element={<Landing />} />
-        <Route path="/properties" element={<PropertySearch />} />
-        <Route path="/properties/:id" element={<PropertyDetails />} />
+        
+        <Route path="/properties" element={<ProtectedRoute><PropertySearch /></ProtectedRoute>} />
+        <Route path="/properties/:id" element={<ProtectedRoute><PropertyDetails /></ProtectedRoute>} />
 
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />

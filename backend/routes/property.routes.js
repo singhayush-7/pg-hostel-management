@@ -10,9 +10,9 @@ const { roomValidator, roomIdValidator } = require("../validators/room.validator
 const { ROLES } = require("../constants/roles");
 
 
-router.get("/", listPropertiesValidator, propertyController.getAllProperties);
+router.get("/", protect, listPropertiesValidator, propertyController.getAllProperties);
 router.get("/my", protect, authorize(ROLES.OWNER), propertyController.getMyProperties);
-router.get("/:id", propertyController.getPropertyById);
+router.get("/:id", protect, propertyController.getPropertyById);
  
 router.post(
   "/",
@@ -41,7 +41,7 @@ router.delete(
 );
 
  
-router.get("/:propertyId/rooms", roomController.getRoomsByProperty);
+router.get("/:propertyId/rooms", protect, roomController.getRoomsByProperty);
 
 router.post(
   "/:propertyId/rooms",
