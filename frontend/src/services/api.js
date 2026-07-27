@@ -1,7 +1,14 @@
 import axios from "axios";
 import { getStoreRef } from "../store/storeRef";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const getBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+  if (window.location.hostname !== 'localhost') {
+    return `http://${window.location.hostname}:5000/api`;
+  }
+  return "http://localhost:5000/api";
+};
+const BASE_URL = getBaseUrl();
  
 const api = axios.create({
   baseURL: BASE_URL,
