@@ -172,7 +172,7 @@ const Navbar = () => {
 
          
           <button
-            className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-dark-700 transition-colors"
+            className="md:hidden p-2 rounded-lg text-surface-600 hover:text-primary-600 hover:bg-surface-100 transition-colors"
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             aria-label="Toggle menu"
           >
@@ -183,41 +183,41 @@ const Navbar = () => {
 
   
       {isMobileOpen && (
-        <div className="md:hidden glass-dark border-t border-dark-600 animate-slide-down">
+        <div className="md:hidden bg-white shadow-lg border-t border-border animate-slide-down">
           <div className="section-container py-4 flex flex-col gap-2">
             {!isAuthenticated ? (
               <>
-                <Link to="/properties" className="px-4 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-dark-700 transition-colors">
+                <Link to="/properties" className="px-4 py-2.5 rounded-lg text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors">
                   Properties
                 </Link>
-                <a href="/#features" className="px-4 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-dark-700 transition-colors">
+                <a href="/#features" className="px-4 py-2.5 rounded-lg text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors">
                   Features
                 </a>
-                <a href="/#how-it-works" className="px-4 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-dark-700 transition-colors">
+                <a href="/#how-it-works" className="px-4 py-2.5 rounded-lg text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors">
                   How It Works
                 </a>
-                <div className="border-t border-dark-600 pt-2 mt-1 flex flex-col gap-2">
+                <div className="border-t border-border pt-2 mt-1 flex flex-col gap-2">
                   <Link to="/login" className="btn-ghost text-sm text-center">Sign In</Link>
                   <Link to="/register" className="btn-primary text-sm text-center">Get Started</Link>
                 </div>
               </>
             ) : (
               <>
-                <div className="px-4 py-2 border-b border-dark-600 mb-1">
-                  <p className="text-white font-medium">{user?.name}</p>
-                  <p className="text-slate-500 text-sm">{user?.email}</p>
+                <div className="px-4 py-2 border-b border-border mb-1">
+                  <p className="text-surface-900 font-medium">{user?.name}</p>
+                  <p className="text-surface-500 text-sm">{user?.email}</p>
                 </div>
-                <Link to={getDashboardLink()} className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-dark-700 transition-colors">
+                <Link to={getDashboardLink()} className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors">
                   <LayoutDashboard className="w-4 h-4" />
                   Dashboard
                 </Link>
-                <Link to={getProfileLink()} className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-dark-700 transition-colors">
+                <Link to={getProfileLink()} className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors">
                   <User className="w-4 h-4" />
                   Profile
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-danger-400 hover:text-danger-300 hover:bg-danger-500/10 transition-colors text-left"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-danger-500 hover:text-danger-600 hover:bg-danger-50 transition-colors text-left"
                 >
                   <LogOut className="w-4 h-4" />
                   Logout
