@@ -23,7 +23,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex items-center justify-center relative overflow-hidden p-4">
+    <div className="min-h-screen bg-surface-50 flex items-center justify-center relative overflow-hidden p-4">
       <div className="absolute inset-0 mesh-bg pointer-events-none" />
       <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-primary-500/10 rounded-full blur-3xl animate-pulse-slow pointer-events-none" />
 
@@ -36,27 +36,27 @@ const ForgotPassword = () => {
             </div>
             <span className="font-bold text-2xl">
               <span className="gradient-text">Smart</span>
-              <span className="text-white">Stay</span>
+              <span className="text-surface-900">Stay</span>
             </span>
           </Link>
-          <h1 className="text-3xl font-bold text-white">Forgot password?</h1>
-          <p className="text-slate-400 mt-2">No worries, we'll send you a reset link</p>
+          <h1 className="text-3xl font-bold text-surface-900">Forgot password?</h1>
+          <p className="text-surface-600 mt-2">No worries, we'll send you a reset link</p>
         </div>
 
-        <div className="glass rounded-2xl border border-dark-600 p-8">
+        <div className="card p-8">
           {successMessage ? (
              
             <div className="text-center animate-scale-in">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-success-500/10 border border-success-500/30 mb-6">
                 <CheckCircle className="w-8 h-8 text-success-400" />
               </div>
-              <h2 className="text-xl font-semibold text-white mb-3">Check your email</h2>
-              <p className="text-slate-400 text-sm mb-6 leading-relaxed">{successMessage}</p>
-              <p className="text-xs text-slate-600 mb-6">
+              <h2 className="text-xl font-semibold text-surface-900 mb-3">Check your email</h2>
+              <p className="text-surface-600 text-sm mb-6 leading-relaxed">{successMessage}</p>
+              <p className="text-xs text-surface-500 mb-6">
                 Didn't receive it? Check your spam folder, or{" "}
                 <button
                   onClick={() => { dispatch(clearSuccess()); }}
-                  className="text-primary-400 hover:text-primary-300 transition-colors"
+                  className="text-primary-600 hover:text-primary-700 transition-colors"
                 >
                   try again
                 </button>
@@ -112,7 +112,7 @@ const ForgotPassword = () => {
               <div className="mt-6 text-center">
                 <Link
                   to="/login"
-                  className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-sm text-surface-600 hover:text-surface-900 transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back to Sign In
