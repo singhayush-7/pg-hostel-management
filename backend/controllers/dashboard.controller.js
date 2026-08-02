@@ -72,6 +72,7 @@ exports.getOwnerDashboard = async (req, res, next) => {
         return {
           ...r,
           property: prop ? prop.name : "Unknown Property",
+          propertyId: r.property,
         };
       });
 

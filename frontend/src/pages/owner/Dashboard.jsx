@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { selectUser } from "../../store/slices/authSlice";
 import { fetchOwnerDashboard, selectDashboardData, selectDashboardLoading } from "../../store/slices/dashboardSlice";
 import { updateRequestStatus } from "../../store/slices/joinRequestSlice";
@@ -30,9 +30,11 @@ import {
 const OwnerDashboard = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const dashboardData = useSelector(selectDashboardData);
   const isLoading = useSelector(selectDashboardLoading);
+  const [isVacantRoomsModalOpen, setIsVacantRoomsModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchOwnerDashboard());
@@ -84,7 +86,6 @@ const OwnerDashboard = () => {
       <div className="card p-5 h-full border border-surface-200">
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-bold text-surface-900">Calendar</h3>
-          <Link to="#" className="text-sm text-primary-600 hover:text-primary-700 font-medium">View all</Link>
         </div>
         
         <div className="flex justify-between items-center mb-6 px-2">
@@ -320,11 +321,13 @@ const OwnerDashboard = () => {
         <div className="card p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-surface-900">Vacant Rooms</h3>
-            <Link to="/properties" className="text-sm font-medium text-primary-600 hover:text-primary-700">View all</Link>
+            {vacantRooms.length > 4 && (
+              <button onClick={() => setIsVacantRoomsModalOpen(true)} className="text-sm font-medium text-primary-600 hover:text-primary-700">View all</button>
+            )}
           </div>
           <div className="space-y-4">
-            {vacantRooms.length > 0 ? vacantRooms.map((room) => (
-              <div key={room._id} className="flex items-center justify-between p-3 rounded-xl border border-border bg-surface-50 hover:border-primary-200 cursor-pointer transition-colors">
+            {vacantRooms.length > 0 ? vacantRooms.slice(0, 4).map((room) => (
+              <div key={room._id} onClick={() => room.propertyId && navigate(`/owner/properties/${room.propertyId}/rooms`)} className="flex items-center justify-between p-3 rounded-xl border border-border bg-surface-50 hover:border-primary-200 cursor-pointer transition-colors">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
                     <BedDouble className="w-5 h-5" />
@@ -512,6 +515,48 @@ const OwnerDashboard = () => {
           </div>
           
         </div>
+
+      </div>
+
+      {isVacantRoomsModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-900/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden animate-scale-in flex flex-col max-h-[90vh]">
+            <div className="flex items-center justify-between p-5 border-b border-border bg-surface-50 shrink-0">
+              <h2 className="text-lg font-bold text-surface-900">All Vacant Rooms</h2>
+              <button onClick={() => setIsVacantRoomsModalOpen(false)} className="text-surface-400 hover:text-surface-600 hover:bg-surface-200 p-1.5 rounded-lg transition-colors">
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-5 overflow-y-auto flex-1">
+              <div className="space-y-4">
+                {vacantRooms.map((room) => (
+                  <div key={room._id} onClick={() => navigate(`/owner/properties/${room.propertyId}/rooms`)} className="flex items-center justify-between p-3 rounded-xl border border-border bg-surface-50 hover:border-primary-200 cursor-pointer transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
+                        <BedDouble className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-surface-900">Room {room.roomNumber}</p>
+                        <p className="text-xs text-surface-500 truncate max-w-[200px]">{room.property}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-surface-900">₹{room.rent?.toLocaleString()}</p>
+                        <p className="text-[10px] text-surface-400">/ month</p>
+                      </div>
+                      <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${room.type === 'single' ? 'bg-success-50 text-success-600 border border-success-200' : 'bg-primary-50 text-primary-600 border border-primary-200'}`}>
+                        {room.type?.toUpperCase()}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
