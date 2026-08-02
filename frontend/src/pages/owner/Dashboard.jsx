@@ -35,6 +35,8 @@ const OwnerDashboard = () => {
   const dashboardData = useSelector(selectDashboardData);
   const isLoading = useSelector(selectDashboardLoading);
   const [isVacantRoomsModalOpen, setIsVacantRoomsModalOpen] = useState(false);
+  const [isActionRequiredModalOpen, setIsActionRequiredModalOpen] = useState(false);
+  const [isRecentActivitiesModalOpen, setIsRecentActivitiesModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchOwnerDashboard());
@@ -402,7 +404,7 @@ const OwnerDashboard = () => {
             <div className="card p-5 border border-surface-200 h-full flex flex-col">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-bold text-surface-900">Action Required</h3>
-                <Link to="#" className="text-sm text-primary-600 hover:text-primary-700 font-medium">View all</Link>
+                <button onClick={() => setIsActionRequiredModalOpen(true)} className="text-sm text-primary-600 hover:text-primary-700 font-medium">View all</button>
               </div>
 
               <div className="space-y-3 flex-1 flex flex-col justify-center">
@@ -456,12 +458,12 @@ const OwnerDashboard = () => {
             <div className="card p-5 h-full border border-surface-200 flex flex-col">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-bold text-surface-900">Recent Activities</h3>
-                <Link to="#" className="text-sm text-primary-600 hover:text-primary-700 font-medium">View all</Link>
+                <button onClick={() => setIsRecentActivitiesModalOpen(true)} className="text-sm text-primary-600 hover:text-primary-700 font-medium">View all</button>
               </div>
 
               {notifications && notifications.length > 0 ? (
                 <div className="space-y-4 flex-1">
-                  {notifications.map((notif, idx) => {
+                  {notifications.slice(0, 5).map((notif, idx) => {
                      
                     let Icon = AlertCircle;
                     let colorClass = "text-surface-500";
@@ -550,6 +552,117 @@ const OwnerDashboard = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Action Required Modal */}
+      {isActionRequiredModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-900/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden animate-scale-in flex flex-col max-h-[90vh]">
+            <div className="flex items-center justify-between p-5 border-b border-border bg-surface-50 shrink-0">
+              <h2 className="text-lg font-bold text-surface-900">All Action Required</h2>
+              <button onClick={() => setIsActionRequiredModalOpen(false)} className="text-surface-400 hover:text-surface-600 hover:bg-surface-200 p-1.5 rounded-lg transition-colors">
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-5 overflow-y-auto flex-1">
+              <div className="space-y-4">
+                <div onClick={() => navigate('/owner/tenants')} className="flex items-center justify-between p-4 bg-warning-50 rounded-xl cursor-pointer hover:bg-warning-100 transition-colors border border-warning-100">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
+                      <Clock className="w-5 h-5 text-warning-500" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-surface-900">{overview.leaseExpiring || 0} leases expiring soon</h4>
+                      <p className="text-xs text-surface-500 mt-0.5">Next 7 days</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-warning-500" />
+                </div>
+                <div onClick={() => navigate('/owner/payments')} className="flex items-center justify-between p-4 bg-danger-50 rounded-xl cursor-pointer hover:bg-danger-100 transition-colors border border-danger-100">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
+                      <AlertCircle className="w-5 h-5 text-danger-500" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-surface-900">₹{overview.rentDue?.toLocaleString() || "0"} rent due</h4>
+                      <p className="text-xs text-surface-500 mt-0.5">From {overview.tenantsOwingRent || 0} tenants</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-danger-500" />
+                </div>
+                <div onClick={() => navigate('/owner/requests')} className="flex items-center justify-between p-4 bg-primary-50 rounded-xl cursor-pointer hover:bg-primary-100 transition-colors border border-primary-100">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
+                      <CalendarCheck className="w-5 h-5 text-primary-500" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-surface-900">{overview.pendingBookings || 0} pending booking approvals</h4>
+                      <p className="text-xs text-surface-500 mt-0.5">Require your action</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-primary-500" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Recent Activities Modal */}
+      {isRecentActivitiesModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-900/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden animate-scale-in flex flex-col max-h-[90vh]">
+            <div className="flex items-center justify-between p-5 border-b border-border bg-surface-50 shrink-0">
+              <h2 className="text-lg font-bold text-surface-900">All Recent Activities</h2>
+              <button onClick={() => setIsRecentActivitiesModalOpen(false)} className="text-surface-400 hover:text-surface-600 hover:bg-surface-200 p-1.5 rounded-lg transition-colors">
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-5 overflow-y-auto flex-1">
+              <div className="space-y-4">
+                {notifications.map((notif, idx) => {
+                  let Icon = AlertCircle;
+                  let colorClass = "text-surface-500";
+                  let bgClass = "bg-surface-50";
+
+                  if (notif.message.toLowerCase().includes('booking') || notif.message.toLowerCase().includes('request')) {
+                    Icon = CalendarIcon;
+                    colorClass = "text-primary-500";
+                    bgClass = "bg-primary-50";
+                  } else if (notif.message.toLowerCase().includes('payment') || notif.message.toLowerCase().includes('rent')) {
+                    Icon = Wallet;
+                    colorClass = "text-success-500";
+                    bgClass = "bg-success-50";
+                  } else if (notif.message.toLowerCase().includes('complaint')) {
+                    Icon = MessageSquare;
+                    colorClass = "text-warning-500";
+                    bgClass = "bg-warning-50";
+                  } else if (notif.message.toLowerCase().includes('check-out') || notif.message.toLowerCase().includes('check out')) {
+                    Icon = CalendarIcon;
+                    colorClass = "text-danger-500";
+                    bgClass = "bg-danger-50";
+                  }
+
+                  return (
+                    <div key={notif._id || idx} className="flex gap-4 p-3 rounded-xl border border-border bg-surface-50">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${bgClass}`}>
+                        <Icon className={`w-5 h-5 ${colorClass}`} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-surface-900 leading-tight">
+                          {notif.message}
+                        </p>
+                        <p className="text-xs text-surface-500 mt-1">{timeAgo(notif.createdAt)}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
