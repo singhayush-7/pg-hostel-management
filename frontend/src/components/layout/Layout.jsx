@@ -46,7 +46,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, setMobileOpen }) =>
     { name: "Payments", href: "/owner/payments", icon: CreditCard },
     { name: "Complaints", href: "/owner/complaints", icon: MessageSquareWarning },
     { name: "Maintenance", href: "/owner/maintenance", icon: Wrench },
-    { name: "Settings", href: "/owner/settings", icon: Settings },
+    { name: "Profile", href: "/owner/profile", icon: User },
   ];
 
   const tenantLinks = [
@@ -55,7 +55,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, setMobileOpen }) =>
     { name: "Requests", href: "/student/requests", icon: ClipboardList },
     { name: "Payments", href: "/student/payments", icon: CreditCard },
     { name: "Complaints", href: "/student/complaints", icon: MessageSquareWarning },
-    { name: "Settings", href: "/student/settings", icon: Settings },
+    { name: "Profile", href: "/student/profile", icon: User },
   ];
 
   const links = user?.role === "owner" ? ownerLinks : tenantLinks;
@@ -222,12 +222,12 @@ const TopNavbar = ({ setMobileOpen }) => {
               </div>
               <div className="py-1">
                 <Link
-                  to={`/${user?.role || 'student'}/settings`}
+                  to={`/${user?.role || 'student'}/profile`}
                   onClick={() => setIsProfileOpen(false)}
                   className="flex items-center gap-2 px-4 py-2.5 text-sm text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors"
                 >
                   <User className="w-4 h-4" />
-                  My Profile
+                  Profile
                 </Link>
                 <button
                   onClick={handleLogout}

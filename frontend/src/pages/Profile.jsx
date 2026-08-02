@@ -4,7 +4,7 @@ import { User, Phone, Mail, Lock, Shield, Bell, Save, AlertCircle } from "lucide
 import toast from "react-hot-toast";
 import { updateProfile, selectUser, selectAuthLoading, clearError, clearSuccess, selectAuthError, selectSuccessMessage, setAvatarPreview as dispatchAvatarPreview } from "../store/slices/authSlice";
 
-export default function Settings() {
+export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const isLoading = useSelector(selectAuthLoading);
@@ -79,29 +79,13 @@ export default function Settings() {
   return (
     <div className="space-y-6 animate-fade-in max-w-4xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold text-surface-900">Settings</h1>
-        <p className="text-surface-500 text-sm mt-0.5">Manage your account preferences and profile</p>
+        <h1 className="text-2xl font-bold text-surface-900">Profile</h1>
+        <p className="text-surface-500 text-sm mt-0.5">Manage your account profile details</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-         
-        <div className="space-y-2">
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-primary-50 text-primary-600 font-medium transition-colors">
-            <User className="w-5 h-5" /> Profile Details
-          </button>
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-surface-600 hover:bg-surface-50 hover:text-surface-900 font-medium transition-colors" onClick={() => toast("Security settings coming soon!")}>
-            <Lock className="w-5 h-5" /> Security
-          </button>
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-surface-600 hover:bg-surface-50 hover:text-surface-900 font-medium transition-colors" onClick={() => toast("Notification settings coming soon!")}>
-            <Bell className="w-5 h-5" /> Notifications
-          </button>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="md:col-span-2 space-y-6">
-          
-          {/* Profile Section */}
-          <div className="card p-6 bg-white border border-border">
+      <div className="space-y-6">
+        {/* Profile Section */}
+        <div className="card p-6 bg-white border border-border">
             <h3 className="text-lg font-bold text-surface-900 mb-6">Personal Information</h3>
             
             <form onSubmit={handleProfileSubmit} className="space-y-5">
@@ -205,6 +189,5 @@ export default function Settings() {
 
         </div>
       </div>
-    </div>
   );
 }

@@ -29,7 +29,7 @@ import OwnerPayments from "./pages/owner/Payments";
 import OwnerComplaints from "./pages/owner/Complaints";
 import OwnerMaintenance from "./pages/owner/Maintenance";
 import AdminDashboard from "./pages/admin/Dashboard";
-import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 
 // Layout & Guards
 import Layout from "./components/layout/Layout";
@@ -97,7 +97,7 @@ function App() {
           <Route path="/student/room" element={<StudentRoom />} />
           <Route path="/student/payments" element={<StudentPayments />} />
           <Route path="/student/complaints" element={<StudentComplaints />} />
-          <Route path="/student/settings" element={<Settings />} />
+          <Route path="/student/profile" element={<Profile />} />
         </Route>
 
         {/* Owner Routes */}
@@ -116,7 +116,7 @@ function App() {
           <Route path="/owner/payments" element={<OwnerPayments />} />
           <Route path="/owner/complaints" element={<OwnerComplaints />} />
           <Route path="/owner/maintenance" element={<OwnerMaintenance />} />
-          <Route path="/owner/settings" element={<Settings />} />
+          <Route path="/owner/profile" element={<Profile />} />
         </Route>
 
         {/* Admin Routes */}
