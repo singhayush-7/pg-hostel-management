@@ -427,6 +427,9 @@ CLIENT_URL=http://localhost:5173
 | **Graceful Shutdown** | `SIGTERM/SIGINT` handlers | Data corruption on server crash |
 
 ---
+<img width="1706" height="948" alt="image" src="https://github.com/user-attachments/assets/80f7839f-c0ba-4890-8561-a5a56135662d" />
+<img width="684" height="806" alt="image" src="https://github.com/user-attachments/assets/6c4235f6-60cf-4f41-a5a0-34191a154054" />
+
 
 ## 👨‍💻 Author
 
