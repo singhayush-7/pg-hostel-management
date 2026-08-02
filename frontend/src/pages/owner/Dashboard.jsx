@@ -321,7 +321,7 @@ const OwnerDashboard = () => {
         <div className="card p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-surface-900">Vacant Rooms</h3>
-            {vacantRooms.length > 4 && (
+            {vacantRooms.length > 0 && (
               <button onClick={() => setIsVacantRoomsModalOpen(true)} className="text-sm font-medium text-primary-600 hover:text-primary-700">View all</button>
             )}
           </div>
