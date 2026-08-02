@@ -82,13 +82,11 @@ exports.getOwnerDashboard = async (req, res, next) => {
       status: { $in: ["Scheduled", "In Progress"] }
     })
       .sort("date")
-      .limit(5)
       .lean();
 
     
     const notifications = await Notification.find({ user: ownerId })
       .sort("-createdAt")
-      .limit(5)
       .lean();
 
     
