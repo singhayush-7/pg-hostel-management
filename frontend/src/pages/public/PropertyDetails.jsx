@@ -110,7 +110,11 @@ export default function PropertyDetails() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="h-64 md:h-96 bg-surface-100 rounded-2xl overflow-hidden relative">
               {property.photos && property.photos.length > 0 ? (
-                <img src={property.photos[0].url} alt={property.name} className="w-full h-full object-cover" />
+                <div className="flex overflow-x-auto snap-x snap-mandatory h-full">
+                  {property.photos.map((photo, index) => (
+                    <img key={index} src={photo.url} alt={`${property.name} ${index + 1}`} className="w-full h-full object-cover shrink-0 snap-center" />
+                  ))}
+                </div>
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-surface-400">
                   <Building2 className="w-16 h-16" />
@@ -254,7 +258,11 @@ export default function PropertyDetails() {
             <div className="p-5 overflow-y-auto flex-1">
                {selectedRoom.images && selectedRoom.images.length > 0 && (
                  <div className="mb-4 h-48 bg-surface-100 rounded-xl overflow-hidden">
-                   <img src={selectedRoom.images[0].url} alt={`Room ${selectedRoom.roomNumber}`} className="w-full h-full object-cover" />
+                   <div className="flex overflow-x-auto snap-x snap-mandatory h-full">
+                     {selectedRoom.images.map((img, index) => (
+                       <img key={index} src={img.url} alt={`Room ${selectedRoom.roomNumber} ${index + 1}`} className="w-full h-full object-cover shrink-0 snap-center" />
+                     ))}
+                   </div>
                  </div>
                )}
                <p className="text-surface-600 mb-6">{selectedRoom.description || 'No detailed description available.'}</p>

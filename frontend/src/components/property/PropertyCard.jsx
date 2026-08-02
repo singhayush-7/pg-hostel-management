@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Building2,
   MapPin,
@@ -50,6 +51,7 @@ const GENDER_LABELS = {
 };
 
 export default function PropertyCard({ property, onEdit, onDelete, onManageRooms }) {
+  const navigate = useNavigate();
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const {
@@ -83,8 +85,15 @@ export default function PropertyCard({ property, onEdit, onDelete, onManageRooms
     }
   };
 
+  const handleCardClick = () => {
+    navigate(`/properties/${_id}`);
+  };
+
   return (
-    <div className="card-hover animate-fade-in flex flex-col overflow-hidden group bg-white border border-border">
+    <div 
+      onClick={handleCardClick}
+      className="card-hover animate-fade-in flex flex-col overflow-hidden group bg-white border border-border cursor-pointer"
+    >
      
       <div className="relative h-48 flex-shrink-0 overflow-hidden bg-surface-100">
         {coverPhoto ? (
@@ -190,7 +199,7 @@ export default function PropertyCard({ property, onEdit, onDelete, onManageRooms
         <div className="flex items-center gap-2 pt-2">
           
           <button
-            onClick={() => onManageRooms(_id)}
+            onClick={(e) => { e.stopPropagation(); onManageRooms(_id); }}
             className="btn-primary flex-1 py-2.5 shadow-sm"
           >
             Manage Rooms
@@ -199,7 +208,7 @@ export default function PropertyCard({ property, onEdit, onDelete, onManageRooms
 
           
           <button
-            onClick={() => onEdit(_id)}
+            onClick={(e) => { e.stopPropagation(); onEdit(_id); }}
             title="Edit property"
             className="w-10 h-10 rounded-xl border border-border bg-white hover:bg-surface-50 hover:border-surface-300 text-surface-500 hover:text-surface-900 flex items-center justify-center transition-all duration-200 shadow-sm"
           >
@@ -208,7 +217,7 @@ export default function PropertyCard({ property, onEdit, onDelete, onManageRooms
 
           
           <button
-            onClick={handleDeleteClick}
+            onClick={(e) => { e.stopPropagation(); handleDeleteClick(); }}
             title={confirmDelete ? 'Click again to confirm' : 'Delete property'}
             className={`w-10 h-10 rounded-xl border shadow-sm flex items-center justify-center transition-all duration-200 font-semibold ${
               confirmDelete
