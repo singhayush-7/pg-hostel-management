@@ -21,6 +21,8 @@ import {
   Bell,
   Search,
   Menu,
+  ChevronDown,
+  User,
 } from "lucide-react";
  
 const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, setMobileOpen }) => {
@@ -157,8 +159,16 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isMobileOpen, setMobileOpen }) =>
  
 const TopNavbar = ({ setMobileOpen }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
+    navigate("/");
+  };
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
@@ -178,23 +188,58 @@ const TopNavbar = ({ setMobileOpen }) => {
           <Menu className="w-5 h-5" />
         </button>
         
-
+        <div className="hidden sm:flex items-center gap-2 text-surface-600 font-medium capitalize">
+          <LayoutDashboard className="w-5 h-5" />
+          {location.pathname.split("/").pop().replace("-", " ")}
+        </div>
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3">
+        <div className="relative">
+          <button
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+            className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-xl border border-border hover:border-primary-500/50 bg-white hover:bg-surface-50 shadow-sm transition-all text-sm"
+          >
+            <div className="w-7 h-7 rounded-full bg-primary-500 flex items-center justify-center text-white text-sm font-bold overflow-hidden">
+              {user?.avatar?.url ? (
+                <img src={user.avatar.url} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                user?.name?.charAt(0)?.toUpperCase() || "U"
+              )}
+            </div>
+            <span className="text-surface-700 font-medium max-w-[100px] truncate">{user?.name}</span>
+            <ChevronDown className={`w-4 h-4 text-surface-400 transition-transform ${isProfileOpen ? "rotate-180" : ""}`} />
+          </button>
 
-        
-        <Link 
-          to={`/${user?.role || 'student'}/settings`}
-          className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-sm hover:ring-2 hover:ring-primary-500/50 hover:bg-primary-200 transition-all ml-1 sm:ml-2"
-          title="My Profile"
-        >
-          {user?.avatar?.url ? (
-            <img src={user.avatar.url} alt="Profile" className="w-full h-full rounded-full object-cover" />
-          ) : (
-            user?.name?.charAt(0) || "U"
+          {isProfileOpen && (
+            <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl border border-border shadow-xl animate-slide-down py-1 z-50">
+              <div className="px-4 py-3 border-b border-border">
+                <p className="text-surface-900 text-sm font-bold truncate">{user?.name}</p>
+                <p className="text-surface-500 text-xs truncate mb-2">{user?.email}</p>
+                <span className={`badge ${user?.role === 'owner' ? 'badge-secondary' : 'badge-primary'} inline-block`}>
+                  {user?.role}
+                </span>
+              </div>
+              <div className="py-1">
+                <Link
+                  to={`/${user?.role || 'student'}/settings`}
+                  onClick={() => setIsProfileOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2.5 text-sm text-surface-600 hover:text-primary-600 hover:bg-surface-50 transition-colors"
+                >
+                  <User className="w-4 h-4" />
+                  My Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-danger-500 hover:text-danger-600 hover:bg-danger-50 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </div>
+            </div>
           )}
-        </Link>
+        </div>
       </div>
     </header>
   );
