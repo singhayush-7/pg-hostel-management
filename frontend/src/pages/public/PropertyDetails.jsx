@@ -109,7 +109,7 @@ export default function PropertyDetails() {
         {/* Property Header */}
         <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-border mb-8">
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="h-64 md:h-full min-h-[300px] bg-surface-100 rounded-2xl overflow-hidden relative">
+            <div className="h-64 md:h-96 bg-surface-100 rounded-2xl overflow-hidden relative">
               {property.photos && property.photos.length > 0 ? (
                 <ImageCarousel images={property.photos} altPrefix={property.name} className="w-full h-full" />
               ) : (
