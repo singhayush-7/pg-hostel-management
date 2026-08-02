@@ -57,7 +57,7 @@ const Register = () => {
       newErrors.password = "Password must contain a number";
     if (formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
-    if (formData.phone && !/^[6-9]\d{9}$/.test(formData.phone))
+    if (!formData.phone || !/^[6-9]\d{9}$/.test(formData.phone))
       newErrors.phone = "Enter a valid 10-digit Indian mobile number";
     return newErrors;
   };
@@ -191,7 +191,7 @@ const Register = () => {
             {/* Phone */}
             <div>
               <label htmlFor="reg-phone" className="input-label">
-                Phone Number <span className="text-slate-600 font-normal">(optional)</span>
+                Phone Number
               </label>
               <div className="relative">
                 <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />

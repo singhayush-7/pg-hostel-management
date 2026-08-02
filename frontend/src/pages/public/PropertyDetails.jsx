@@ -142,6 +142,38 @@ export default function PropertyDetails() {
                   })}
                 </div>
               </div>
+
+              <div className="mb-6">
+                <h3 className="font-semibold text-surface-900 mb-3">Owner Details</h3>
+                <div className="flex items-center gap-4 bg-surface-50 p-4 rounded-xl border border-border">
+                  {property.owner?.avatar ? (
+                    <img src={property.owner.avatar} alt={property.owner.name} className="w-12 h-12 rounded-full object-cover" />
+                  ) : (
+                    <div className="w-12 h-12 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold text-lg">
+                      {property.owner?.name?.charAt(0).toUpperCase() || 'O'}
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-bold text-surface-900">{property.owner?.name}</p>
+                    <p className="text-sm text-surface-500">{property.owner?.phone}</p>
+                    <p className="text-sm text-surface-500">{property.owner?.email}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-surface-900 mb-3">Location on Map</h3>
+                <div className="w-full h-64 rounded-xl overflow-hidden border border-border">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    allowFullScreen
+                    src={`https://www.google.com/maps?q=${encodeURIComponent([property.address, property.area, property.city, property.pincode].filter(Boolean).join(', '))}&output=embed`}
+                  ></iframe>
+                </div>
+              </div>
             </div>
           </div>
         </div>

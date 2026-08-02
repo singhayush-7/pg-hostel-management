@@ -17,7 +17,8 @@ export default function PropertySearch() {
     city: searchParams.get('city') || '',
     area: searchParams.get('area') || '',
     type: searchParams.get('type') || '',
-    gender: searchParams.get('gender') || ''
+    gender: searchParams.get('gender') || '',
+    occupancy: searchParams.get('occupancy') || ''
   });
 
   useEffect(() => {
@@ -30,6 +31,8 @@ export default function PropertySearch() {
     if (filters.area && !p.area.toLowerCase().includes(filters.area.toLowerCase())) return false;
     if (filters.type && p.type !== filters.type) return false;
     if (filters.gender && p.gender !== filters.gender) return false;
+    if (filters.occupancy === 'available' && !(p.availableRooms > 0)) return false;
+    if (filters.occupancy === 'occupied' && p.availableRooms > 0) return false;
     if (!p.isActive) return false;
     return true;
   });
@@ -85,7 +88,7 @@ export default function PropertySearch() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <select name="type" value={filters.type} onChange={handleFilterChange} className="input w-full">
               <option value="">All Types</option>
               <option value="pg">PG</option>
@@ -97,6 +100,11 @@ export default function PropertySearch() {
               <option value="male">Male Only</option>
               <option value="female">Female Only</option>
               <option value="any">Any</option>
+            </select>
+            <select name="occupancy" value={filters.occupancy} onChange={handleFilterChange} className="input w-full">
+              <option value="">All Occupancy</option>
+              <option value="available">Has Unoccupied Rooms</option>
+              <option value="occupied">Fully Occupied</option>
             </select>
           </div>
         </div>
