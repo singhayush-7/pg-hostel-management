@@ -516,8 +516,6 @@ const OwnerDashboard = () => {
           
         </div>
 
-      </div>
-
       {isVacantRoomsModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-900/40 backdrop-blur-sm animate-fade-in">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden animate-scale-in flex flex-col max-h-[90vh]">
