@@ -8,6 +8,7 @@ import { selectUser } from '../../store/slices/authSlice';
 import { MapPin, Building2, Wifi, Wind, Utensils, Users, Shield, Car, Check, UploadCloud, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Navbar from '../../components/layout/Navbar';
+import ImageCarousel from '../../components/ui/ImageCarousel';
 
 const AMENITY_ICONS = {
   WiFi: Wifi,
@@ -110,11 +111,7 @@ export default function PropertyDetails() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="h-64 md:h-96 bg-surface-100 rounded-2xl overflow-hidden relative">
               {property.photos && property.photos.length > 0 ? (
-                <div className="flex overflow-x-auto snap-x snap-mandatory h-full">
-                  {property.photos.map((photo, index) => (
-                    <img key={index} src={photo.url} alt={`${property.name} ${index + 1}`} className="w-full h-full object-cover shrink-0 snap-center" />
-                  ))}
-                </div>
+                <ImageCarousel images={property.photos} altPrefix={property.name} className="w-full h-full" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-surface-400">
                   <Building2 className="w-16 h-16" />
@@ -258,11 +255,7 @@ export default function PropertyDetails() {
             <div className="p-5 overflow-y-auto flex-1">
                {selectedRoom.images && selectedRoom.images.length > 0 && (
                  <div className="mb-4 h-48 bg-surface-100 rounded-xl overflow-hidden">
-                   <div className="flex overflow-x-auto snap-x snap-mandatory h-full">
-                     {selectedRoom.images.map((img, index) => (
-                       <img key={index} src={img.url} alt={`Room ${selectedRoom.roomNumber} ${index + 1}`} className="w-full h-full object-cover shrink-0 snap-center" />
-                     ))}
-                   </div>
+                   <ImageCarousel images={selectedRoom.images} altPrefix={`Room ${selectedRoom.roomNumber}`} className="w-full h-full" />
                  </div>
                )}
                <p className="text-surface-600 mb-6">{selectedRoom.description || 'No detailed description available.'}</p>
