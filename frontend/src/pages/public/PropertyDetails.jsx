@@ -30,7 +30,7 @@ export default function PropertyDetails() {
   const isRequestLoading = useSelector(selectJoinRequestLoading);
 
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(''); // 'request' or 'details'
   
   const [message, setMessage] = useState('');
   const [documents, setDocuments] = useState([]);
@@ -41,7 +41,7 @@ export default function PropertyDetails() {
     dispatch(fetchRoomsByProperty(id));
   }, [dispatch, id]);
 
-  const handleOpenModal = (room) => {
+  const handleOpenRequestModal = (room) => {
     // Basic auth check using Redux state (HttpOnly cookies mean we can't check localStorage)
     if (!user) {
       toast.error('Please login to request a room');
@@ -50,11 +50,16 @@ export default function PropertyDetails() {
     }
     
     setSelectedRoom(room);
-    setIsModalOpen(true);
+    setModalType('request');
+  };
+
+  const handleOpenDetailsModal = (room) => {
+    setSelectedRoom(room);
+    setModalType('details');
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setModalType('');
     setSelectedRoom(null);
     setMessage('');
     setDocuments([]);
@@ -208,15 +213,23 @@ export default function PropertyDetails() {
                     </div>
                   </div>
                   
-                  {user?.role !== 'owner' && (
+                  <div className="flex gap-2 mt-auto">
                     <button 
-                      disabled={room.status !== 'available'}
-                      onClick={() => handleOpenModal(room)} 
-                      className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={() => handleOpenDetailsModal(room)} 
+                      className={`${user?.role === 'owner' ? 'btn-primary' : 'btn-secondary'} flex-1`}
                     >
-                      Request to Join
+                      View Details
                     </button>
-                  )}
+                    {user?.role !== 'owner' && (
+                      <button 
+                        disabled={room.status !== 'available'}
+                        onClick={() => handleOpenRequestModal(room)} 
+                        className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Request to Join
+                      </button>
+                    )}
+                  </div>
                 </div>
               )) : (
                 <div className="col-span-full py-12 text-center bg-white rounded-2xl border border-border">
@@ -228,8 +241,71 @@ export default function PropertyDetails() {
         </div>
       </div>
 
+      {/* Room Details Modal */}
+      {modalType === 'details' && selectedRoom && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-900/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden animate-scale-in flex flex-col max-h-[90vh]">
+            <div className="flex items-center justify-between p-5 border-b border-border bg-surface-50 shrink-0">
+              <h2 className="text-lg font-bold text-surface-900">Room {selectedRoom.roomNumber} Details</h2>
+              <button onClick={handleCloseModal} className="text-surface-400 hover:text-surface-600 hover:bg-surface-200 p-1.5 rounded-lg transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-5 overflow-y-auto flex-1">
+               {selectedRoom.images && selectedRoom.images.length > 0 && (
+                 <div className="mb-4 h-48 bg-surface-100 rounded-xl overflow-hidden">
+                   <img src={selectedRoom.images[0].url} alt={`Room ${selectedRoom.roomNumber}`} className="w-full h-full object-cover" />
+                 </div>
+               )}
+               <p className="text-surface-600 mb-6">{selectedRoom.description || 'No detailed description available.'}</p>
+               
+               <div className="grid grid-cols-2 gap-4 text-sm mb-6">
+                 <div className="bg-surface-50 p-4 rounded-xl border border-border">
+                   <p className="text-surface-500 mb-1">Floor</p>
+                   <p className="font-bold text-surface-900 text-lg">{selectedRoom.floor}</p>
+                 </div>
+                 <div className="bg-surface-50 p-4 rounded-xl border border-border">
+                   <p className="text-surface-500 mb-1">Type</p>
+                   <p className="font-bold text-surface-900 text-lg capitalize">{selectedRoom.type} Sharing</p>
+                 </div>
+                 <div className="bg-surface-50 p-4 rounded-xl border border-border">
+                   <p className="text-surface-500 mb-1">Capacity</p>
+                   <p className="font-bold text-surface-900 text-lg">{selectedRoom.capacity} Persons</p>
+                 </div>
+                 <div className="bg-surface-50 p-4 rounded-xl border border-border">
+                   <p className="text-surface-500 mb-1">Available Beds</p>
+                   <p className="font-bold text-surface-900 text-lg">{selectedRoom.availableBeds}</p>
+                 </div>
+               </div>
+
+               <h3 className="font-semibold text-surface-900 mb-3">Room Amenities</h3>
+               <div className="flex gap-2 flex-wrap mb-2">
+                 {selectedRoom.isAC && <span className="px-3 py-1.5 bg-primary-50 text-primary-700 rounded-xl text-sm font-medium">AC</span>}
+                 {selectedRoom.hasAttachedBath && <span className="px-3 py-1.5 bg-primary-50 text-primary-700 rounded-xl text-sm font-medium">Attached Bath</span>}
+                 {selectedRoom.hasWiFi && <span className="px-3 py-1.5 bg-primary-50 text-primary-700 rounded-xl text-sm font-medium">WiFi</span>}
+                 {selectedRoom.hasFood && <span className="px-3 py-1.5 bg-primary-50 text-primary-700 rounded-xl text-sm font-medium">Food Included</span>}
+                 {!selectedRoom.isAC && !selectedRoom.hasAttachedBath && !selectedRoom.hasWiFi && !selectedRoom.hasFood && (
+                   <span className="text-surface-500 text-sm">Standard amenities</span>
+                 )}
+               </div>
+            </div>
+            {user?.role !== 'owner' && (
+              <div className="p-5 border-t border-border shrink-0">
+                <button 
+                  disabled={selectedRoom.status !== 'available'}
+                  onClick={() => setModalType('request')} 
+                  className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed py-3"
+                >
+                  Request to Join
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Request Modal */}
-      {isModalOpen && selectedRoom && (
+      {modalType === 'request' && selectedRoom && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-900/40 backdrop-blur-sm animate-fade-in">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden animate-scale-in flex flex-col max-h-[90vh]">
             <div className="flex items-center justify-between p-5 border-b border-border bg-surface-50 shrink-0">
